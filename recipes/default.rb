@@ -8,7 +8,7 @@ end
 package 'httpd'
 
 service 'httpd' do
-  action [:enable, :start]
+  action [:start]
 end
 
 template '/var/www/html/index.html' do # ~FC033
