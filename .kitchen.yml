@@ -1,13 +1,10 @@
 ---
 driver:
-  name: vagrant
-  customize:
-    cpus: 1
-    memory: 1024
-    cpuexecutioncap: 100
+  name: docker
+  use_sudo: false
 
 provisioner:
-  name: chef_solo
+  name: chef_zero
   always_update_cookbooks: true
 
 verifier:
@@ -15,6 +12,11 @@ verifier:
 
 platforms:
   - name: centos-7.2
+    driver_config:
+      run_command: /usr/sbin/init
+      privileged: true
+      provision_command:
+        - systemctl enable sshd.service
 
 suites:
   - name: default
@@ -23,6 +25,3 @@ suites:
     verifier:
       inspec_tests:
         - test/smoke/default
-    driver:
-      network:
-        - ["public_network", {bridge: 'en0: Wi-Fi (AirPort)', type: dhcp}]
