@@ -1,0 +1,28 @@
+---
+driver:
+  name: vagrant
+  customize:
+    cpus: 1
+    memory: 1024
+    cpuexecutioncap: 100
+
+provisioner:
+  name: chef_solo
+  always_update_cookbooks: true
+
+verifier:
+  name: inspec
+
+platforms:
+  - name: centos-7.2
+
+suites:
+  - name: default
+    run_list:
+      - recipe[helloworld::default]
+    verifier:
+      inspec_tests:
+        - test/smoke/default
+    driver:
+      network:
+        - ["public_network", {bridge: 'en0: Wi-Fi (AirPort)', type: dhcp}]
