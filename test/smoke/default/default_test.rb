@@ -3,7 +3,3 @@ unless os.windows?
     it { should exist }
   end
 end
-
-describe port(80) do
-  it { should be_listening }
-end
